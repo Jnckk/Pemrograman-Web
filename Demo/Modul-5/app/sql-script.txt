@@ -1,0 +1,42 @@
+-- create_database.sql
+
+CREATE DATABASE IF NOT EXISTS webmodul5;
+
+USE webmodul5;
+
+CREATE TABLE IF NOT EXISTS brands (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS motors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    model VARCHAR(255) NOT NULL,
+    year INT NOT NULL,
+    brand_id INT,
+    FOREIGN KEY (brand_id) REFERENCES brands(id)
+);
+
+-- Insert data into brands table
+INSERT INTO brands (name) VALUES
+('Honda'),
+('Yamaha'),
+('Ducati');
+
+-- Insert data into motors table
+INSERT INTO motors (model, year, brand_id) VALUES
+('CBR1000RR', 2022, 1),   -- Honda
+('CBR600RR', 2023, 1),    -- Honda
+('Africa Twin', 2022, 1), -- Honda
+('YZF-R1', 2023, 2),       -- Yamaha
+('MT-09', 2022, 2),        -- Yamaha
+('YZF-R6', 2023, 2),       -- Yamaha
+('Panigale V4', 2022, 3),  -- Ducati
+('Monster 1200', 2023, 3), -- Ducati
+('Multistrada 950', 2022, 3), -- Ducati
+('CB500F', 2022, 1),       -- Honda
+('YZF-R3', 2023, 2),       -- Yamaha
+('Monster 821', 2022, 3),  -- Ducati
+('CBR650R', 2023, 1),      -- Honda
+('FZ-07', 2022, 2),        -- Yamaha
+('Scrambler 1100', 2023, 3); -- Ducati

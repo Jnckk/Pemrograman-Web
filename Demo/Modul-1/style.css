@@ -1,0 +1,55 @@
+.container-fluid {
+    position: relative;
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 10%; /* Ubah nilai ini untuk mengatur jarak teks dari sisi kiri */
+    transform: translate(0%, -50%);
+    text-align: left;
+    color: white;
+}
+ /* Custom CSS */
+ .navbar-custom {
+    background-color: white; /* warna latar belakang navbar */
+  }
+  .navbar-custom .navbar-brand img {
+    max-height: 40px; /* atur tinggi maksimum untuk logo */
+    margin-left: 50px;
+  }
+  .navbar-custom .navbar-nav {
+    text-align: center;
+  }
+  .navbar-custom .nav-item {
+    margin: 10 3px;
+  }
+  .navbar-custom .nav-link {
+    color: black;
+  }
+  .navbar-custom .nav-link:hover {
+    color: orangered;
+  }
+  .navbar-custom .btn {
+    margin-left: 5px;
+  }
+  .navbar-custom .btn:hover {
+    background-color: orangered;
+    color: white;
+  }
+
+  
+  
+  @media (max-width: 768px) {
+    /* Responsiveness for small screens */
+    .navbar-custom .navbar-nav {
+      text-align: left;
+    }
+    .navbar-custom .nav-item {
+      margin: 10px 0;
+    }
+    .navbar-custom .btn {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  }
