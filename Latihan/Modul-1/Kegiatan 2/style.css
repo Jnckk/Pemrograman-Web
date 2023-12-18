@@ -1,0 +1,25 @@
+/* CSS untuk tabel */
+table {
+  border-collapse: collapse;
+  background-color: gold; /* Warna latar belakang emas */
+}
+
+/* CSS untuk sel header */
+th {
+  background-color: gold; /* Warna latar belakang emas */
+  color: black; /* Warna teks hitam */
+  border: 2px double black; /* Border 2px double */
+  padding: 5px; /* Padding 5px */
+  text-align: center; /* Rata tengah secara horisontal */
+  vertical-align: middle; /* Rata tengah secara vertikal */
+  font-weight: bold; /* Membuat teks bold */
+}
+
+/* CSS untuk sel data */
+td {
+  border: 2px double black; /* Border 2px double */
+  padding: 5px; /* Padding 5px */
+  text-align: center; /* Rata tengah secara horisontal */
+  vertical-align: middle; /* Rata tengah secara vertikal */
+  font-weight: bold; /* Membuat teks bold */
+}

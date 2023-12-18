@@ -1,0 +1,16 @@
+
+## Installation
+
+Buat database kosong pada phpmyadmin dengan nama "praktikum"
+
+Pada terminal 
+```bash
+  Jalankan "php artisan migrate" pada terminal direktori program / terminal VSCODE
+  Jalankan "php artisan serve"
+```
+
+Pada postman
+
+```bash
+  import file "CRUD.postman_collection"
+```
