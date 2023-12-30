@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>UAP RISKI CAHYADI (279)</title>
+</head>
+<body>
+    <h1>ALFADURO</h1>
+
+    <table id="produk-table">
+        <thead>
+            <tr>
+                <th>ID PRODUK</th>
+                <th>NAMA PRODUK</th>
+                <th>HARGA PRODUK (IDR)</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <form id="transaction-form">
+        <div class="form-group">
+            <label for="product-id">ID Produk:</label>
+            <input type="number" id="product-id" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Jumlah:</label>
+            <input type="number" id="quantity" min="1" required>
+        </div>
+        <button type="button" onclick="submitTransaction()">Masukkan ke Keranjang</button>
+    </form>
+
+    <table id="transactions-table">
+        <thead>
+            <tr>
+                <th>ID Produk</th>
+                <th>Nama Produk</th>
+                <th>Harga (IDR)</th>
+                <th>Jumlah</th>
+                <th>Total Harga (IDR)</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <button type="button" onclick="checkout()">Checkout</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tableBody = document.querySelector('#produk-table tbody');
+            const transactionsTableBody = document.querySelector('#transactions-table tbody');
+
+            const products = [
+                { id: 1, name: 'Produk A', price: 10000 },
+                { id: 2, name: 'Produk B', price: 20000 },
+                { id: 3, name: 'Produk C', price: 30000 },
+            ];
+            const transactions = [];
+
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${formatCurrency(product.price)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            window.submitTransaction = function () {
+                const productIdInput = document.getElementById('product-id');
+                const quantityInput = document.getElementById('quantity');
+
+                const productId = parseInt(productIdInput.value);
+                const quantity = parseInt(quantityInput.value);
+
+                const selectedProduct = products.find(product => product.id === productId);
+
+                if (!selectedProduct) {
+                    alert('Produk tidak ditemukan. Masukkan ID produk yang valid.');
+                    return;
+                }
+                if (isNaN(quantity) || quantity <= 0) {
+                    alert('Masukkan jumlah produk yang valid.');
+                    return;
+                }
+                const transaction = {
+                    productId: selectedProduct.id,
+                    productName: selectedProduct.name,
+                    price: selectedProduct.price,
+                    quantity: quantity,
+                    total: selectedProduct.price * quantity,
+                };
+
+                transactions.push(transaction);
+
+                console.log('Transaksi:', transaction);
+
+                displayTransactions();
+
+                calculateTotalTransaction();
+            };
+
+            function calculateTotalTransaction() {
+                const totalAmountElement = document.getElementById('total-amount');
+                const totalAmount = transactions.reduce((total, transaction) => {
+                    return total + transaction.total;
+                }, 0);
+
+                totalAmountElement.textContent = formatCurrency(totalAmount);
+            }
+            function displayTransactions() {
+                transactionsTableBody.innerHTML = '';
+                transactions.forEach(transaction => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${transaction.productId}</td>
+                        <td>${transaction.productName}</td>
+                        <td>${formatCurrency(transaction.price)}</td>
+                        <td>${transaction.quantity}</td>
+                        <td>${formatCurrency(transaction.total)}</td>
+                    `;
+                    transactionsTableBody.appendChild(row);
+                });
+            }
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(amount);
+            }
+            window.checkout = function () {
+                const totalAmount = transactions.reduce((total, transaction) => total + transaction.total, 0);
+
+                const paymentButtonClicked = confirm('Total Transaksi: ' + formatCurrency(totalAmount) + '\nTekan "Ok" untuk melanjutkan pembayaran.');
+
+                if (paymentButtonClicked) {
+                    const paymentAmount = prompt('Masukkan jumlah pembayaran (IDR):');
+
+                    if (paymentAmount === null || isNaN(parseFloat(paymentAmount)) || parseFloat(paymentAmount) < totalAmount) {
+                        alert('Jumlah pembayaran tidak valid atau kurang dari total transaksi. Pembayaran dibatalkan.');
+                    } else {
+                        alert('Pembayaran berhasil! Kembaliannya: ' + formatCurrency(parseFloat(paymentAmount) - totalAmount));
+
+                        document.getElementById('total-amount').textContent = formatCurrency(0);
+                        transactionsTableBody.innerHTML = '';
+                        transactions.length = 0;
+                    }
+                }
+            };
+        });
+    </script>
+</body>
+</html>
+	
